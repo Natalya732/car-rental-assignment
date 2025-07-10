@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="flex items-center">
               <CarFront className="h-8 w-8 text-primary mr-3" />
               <h1 className="text-xl font-semibold text-gray-900">
-                New Rental Admin Dashboard
+                Car Rental Admin Dashboard
               </h1>
             </div>
             <div className="flex items-center space-x-4">
