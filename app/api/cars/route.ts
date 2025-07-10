@@ -9,7 +9,11 @@ function getFilteredData(name: string, status: string) {
       : true;
     const matchWithStatus = status ? item.status === status : true;
     return matchWithName && matchWithStatus;
-  });
+  })?.sort(
+      (a, b) =>
+        new Date(b.servicedDate).getTime() - new Date(a.servicedDate).getTime(),
+    );
+;
 }
 
 export async function GET(request: Request) {
