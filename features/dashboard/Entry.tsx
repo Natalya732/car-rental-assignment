@@ -117,9 +117,7 @@ export default function DashboardPage({
   }, [listings?.totalCount, queryParams.pagination.rows]);
 
   const handleStatusChange = useCallback(
-    (id: string, status: RENTAL_STATUS) => {
-      updateListingMutation.mutate({ id, status, actionBy: user?.email });
-
+    async (id: string, status: RENTAL_STATUS) => {
       queryClient.setQueryData(
         listingsQueryKey,
         (oldData: FetchCarListingsResponse | undefined) => {
@@ -139,6 +137,16 @@ export default function DashboardPage({
           };
         },
       );
+
+      await updateListingMutation.mutateAsync({
+        id,
+        status,
+        actionBy: user?.email,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["car-stats"],
+      });
     },
     [queryClient, queryParams, listingsQueryKey],
   );
@@ -174,6 +182,10 @@ export default function DashboardPage({
           };
         },
       );
+
+      queryClient.invalidateQueries({
+        queryKey: ["car-stats"],
+      });
     },
     [queryClient, listingsQueryKey, editingListing],
   );
